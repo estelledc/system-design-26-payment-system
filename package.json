@@ -1,0 +1,45 @@
+{
+  "name": "system-design-26-payment-system",
+  "version": "0.1.0",
+  "description": "Replayable payment orchestration with a durable processor oracle and balanced journal evidence",
+  "type": "module",
+  "private": true,
+  "exports": {
+    ".": "./src/index.js"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "start": "node src/main.js serve",
+    "oracle": "node src/main.js oracle",
+    "lint": "node scripts/repo-check.mjs",
+    "test": "node --test --test-reporter=spec test/unit/*.test.js",
+    "test:infra": "node --test --test-reporter=spec test/integration/postgresql-oracle.test.js",
+    "test:crash": "node --test --test-reporter=spec test/integration/crash.test.js",
+    "smoke:infra": "node scripts/infra-smoke.mjs",
+    "benchmark:infra": "node scripts/infra-benchmark.mjs",
+    "audit": "npm audit --audit-level=high",
+    "check": "npm run lint && npm test && npm run audit",
+    "check:ci": "npm run check && npm run test:infra && npm run test:crash && npm run smoke:infra && npm run benchmark:infra"
+  },
+  "dependencies": {
+    "pg": "8.23.0"
+  },
+  "keywords": [
+    "system-design",
+    "payments",
+    "idempotency",
+    "postgresql",
+    "data-integrity"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/estelledc/system-design-26-payment-system.git"
+  },
+  "bugs": {
+    "url": "https://github.com/estelledc/system-design-26-payment-system/issues"
+  },
+  "homepage": "https://github.com/estelledc/system-design-26-payment-system#readme",
+  "license": "MIT"
+}

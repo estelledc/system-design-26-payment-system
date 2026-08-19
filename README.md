@@ -10,13 +10,14 @@ secondary chapter.
 
 ## Current status
 
-The fixed secondary chapter and nine primary pages have now been compared with the closed-book contract. The selected v0.1 slice
-uses PostgreSQL 17 as the local authority and an independent loopback processor oracle whose immutable decisions are appended and
-`fsync`ed before response. The oracle exists only to make the response-loss boundary executable; it is not compatible with Stripe,
-a bank, a card network, or any real payment provider.
+The fixed secondary chapter and nine primary pages have been compared with the closed-book contract. The implementation now
+exercises PostgreSQL 17 as the local authority and an independent loopback processor oracle whose immutable decisions are appended
+and `fsync`ed before response. The oracle exists only to make the response-loss boundary executable; it is not compatible with
+Stripe, a bank, a card network, or any real payment provider.
 
-Implementation and public CI are still pending. No executable correctness, processor compatibility, real payment, settlement,
-compliance, merchant notification, customer outcome, or external acceptance is claimed yet.
+The complete local gate is green on Node 26.7.0 with PostgreSQL 17.11: 14 pure tests, 11 real PostgreSQL/oracle integration groups,
+eight independent child processes killed by `SIGKILL`, one smoke lifecycle, the bounded benchmark, repository evidence scans, and
+zero high/critical dependency findings. Public multi-runtime CI is still pending, so this is local implementation evidence only.
 
 ## Design selected
 
@@ -27,6 +28,23 @@ compliance, merchant notification, customer outcome, or external acceptance is c
 - multiple partial refunds reserve value under a payment row lock and can never exceed captured value;
 - refund acceptance gates one balanced reversal, with the same ambiguity and reconciliation rules;
 - local delivery acknowledgement is receipted but never promoted to merchant action, fulfillment, or customer receipt.
+
+## Run the gates
+
+Start PostgreSQL 17, set `DATABASE_URL`, then run:
+
+```bash
+npm ci --ignore-scripts
+npm run check:ci
+```
+
+The test and runner processes create their own temporary loopback processor logs and remove them on exit. `check:ci` fails if
+PostgreSQL, the independent processor process, crash recovery, smoke, benchmark, audit, or evidence checks fail; it never silently
+substitutes mocks for those gates.
+
+The fixed benchmark uses 32 generated payments, 32 capture attempts, 16 partial refunds, 48 balanced journal transactions, 96
+journal lines, 32 evidence queries, and one processor restart. Its elapsed values describe only one runner and are not payment QPS,
+money throughput, provider latency, availability, settlement, compliance, production capacity, or an SLA.
 
 ## Read first
 

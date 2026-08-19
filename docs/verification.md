@@ -87,3 +87,21 @@ throughput, extrapolate QPS, compare Node versions, or claim percentile SLA/prod
 v0.1 becomes complete only after the public repository exists, the implementation commit is green in every runtime, final evidence
 docs are pushed and green again, topics/default branch/license are verified, local `main` equals `origin/main`, and the parent
 project card/restore table/25-repository plan pass the parent lint gate.
+
+## Current local receipt
+
+On 2026-08-19, `npm run check:ci` completed on Node 26.7.0 with PostgreSQL 17.11 (Homebrew):
+
+- 14 pure tests passed with zero failed/skipped/todo;
+- 11 real PostgreSQL plus independent durable-oracle integration groups passed;
+- eight true child processes reached their named durable boundary, were killed by `SIGKILL`, and replayed one local/external effect;
+- smoke ended partially refunded with three balanced journal transactions, six lines, three outbox events, one local delivery
+  acknowledgement, and zero unbalanced/over-refunded rows;
+- benchmark fixture was exactly 32 payments, 48 attempts, 16 refunds, 48 journal transactions, 96 lines, 32 evidence queries,
+  and one oracle restart; the full local run observed 159.569 ms create batch, 680.515 ms capture batch, 355.441 ms refund batch,
+  and 116.745 ms evidence batch;
+- dependency audit found zero high/critical findings, and repository scans found zero skipped tests, copied media, or card-like digit
+  sequences.
+
+These values are bounded local observations. They are not the required public Node 22/24/26 receipt and do not establish any real
+provider, money movement, settlement, accounting approval, merchant/customer outcome, production behavior, or external acceptance.
