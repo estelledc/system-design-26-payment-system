@@ -105,3 +105,19 @@ On 2026-08-19, `npm run check:ci` completed on Node 26.7.0 with PostgreSQL 17.11
 
 These values are bounded local observations. They are not the required public Node 22/24/26 receipt and do not establish any real
 provider, money movement, settlement, accounting approval, merchant/customer outcome, production behavior, or external acceptance.
+
+## Public implementation receipt
+
+Implementation commit `d67473fd36f75af7069e4af3d3a1d0f588dcf519` passed public CI run
+[`32214405629`](https://github.com/estelledc/system-design-26-payment-system/actions/runs/32214405629):
+
+| Runtime | Job | Result | PostgreSQL | Bounded create / capture / refund / evidence batches |
+|---|---:|---|---|---|
+| Node 22.23.2 | `95953105338` | success | 17.11 | 111.342 / 529.896 / 243.247 / 101.530 ms |
+| Node 24.19.0 | `95953105371` | success | 17.11 | 99.307 / 511.507 / 230.667 / 97.113 ms |
+| Node 26.7.0 | `95953105570` | success | 17.11 | 109.223 / 516.493 / 234.020 / 104.858 ms |
+
+Each job ran 14 pure tests, 11 real PostgreSQL/oracle integration groups, eight true `SIGKILL` child processes, smoke, the exact
+32-payment/48-attempt benchmark, repository scans, and the high-severity dependency audit with zero failed/skipped/todo tests and
+zero high/critical findings. The table records whole-batch runner observations only; it is not a runtime comparison or a payment,
+money, provider, availability, durability, settlement, compliance, production, SLA, or external-acceptance result.

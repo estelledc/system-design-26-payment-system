@@ -123,6 +123,11 @@ const readme = await readFile(resolve(root, 'README.md'), 'utf8');
 assert.match(readme, /independent loopback processor oracle/);
 assert.match(readme, /Implementation and public CI are still pending|implementation now\s+exercises/i);
 assert.match(readme, /external acceptance/i);
+assert.match(readme, /d67473fd36f75af7069e4af3d3a1d0f588dcf519/);
+assert.match(readme, /32214405629/);
+assert.match(readme, /95953105338/);
+assert.match(readme, /95953105371/);
+assert.match(readme, /95953105570/);
 
 process.stdout.write(`${JSON.stringify({
   checkedFiles: allFiles.length,
