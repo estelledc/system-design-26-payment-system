@@ -1,5 +1,18 @@
 # Verification plan
 
+## Identity-safe history
+
+The identity-safe rewrite preserved every existing tree, message, and timestamp while mapping the four commits in order:
+
+- `dc10910a013dac2dd84af7113f387f0805135cc5` → `c94b7a34425f8a4549de4d60800277f99a30f389`
+- `5012bba664d44cae78cc549e60a1b4de6fc98ef0` → `c5ae6de296c0a96a140562b761275948d33039a7`
+- `d67473fd36f75af7069e4af3d3a1d0f588dcf519` → `82aa38221c85b775948d2e04e97de93bbf55d750`
+- `30faae3bba98c6e44e01fe1e18f602e2f4ae03ad` → `78e459809b18dfa40ebb3195565b9abb488bdd57`
+
+Current reachable `main` uses the repository owner's GitHub noreply identity. Rewritten baseline
+`78e459809b18dfa40ebb3195565b9abb488bdd57` passed [CI run 32229450423](https://github.com/estelledc/system-design-26-payment-system/actions/runs/32229450423)
+on Node 22/24/26 with PostgreSQL 17.11, the durable loopback processor, and the complete gate.
+
 ## Evidence ladder
 
 1. **Pure model:** canonical identity, integer money, state transitions, account mapping, balance arithmetic, error/telemetry rules.
@@ -106,10 +119,11 @@ On 2026-08-19, `npm run check:ci` completed on Node 26.7.0 with PostgreSQL 17.11
 These values are bounded local observations. They are not the required public Node 22/24/26 receipt and do not establish any real
 provider, money movement, settlement, accounting approval, merchant/customer outcome, production behavior, or external acceptance.
 
-## Public implementation receipt
+## Historical public implementation receipt
 
-Implementation commit `d67473fd36f75af7069e4af3d3a1d0f588dcf519` passed public CI run
-[`32214405629`](https://github.com/estelledc/system-design-26-payment-system/actions/runs/32214405629):
+Pre-rewrite implementation object `d67473fd36f75af7069e4af3d3a1d0f588dcf519`, whose current tree-equivalent commit is
+`82aa38221c85b775948d2e04e97de93bbf55d750`, passed historical public CI run
+[`32214405629`](https://github.com/estelledc/system-design-26-payment-system/actions/runs/32214405629). The run remains bound to the old object:
 
 | Runtime | Job | Result | PostgreSQL | Bounded create / capture / refund / evidence batches |
 |---|---:|---|---|---|
